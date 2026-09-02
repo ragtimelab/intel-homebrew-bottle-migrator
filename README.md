@@ -32,10 +32,10 @@ Install an immutable release rather than `main`. In Codex, ask `$skill-installer
 ```text
 repository: ragtimelab/intel-homebrew-bottle-migrator
 path: skills/intel-homebrew-bottle-migrator
-ref: v0.1.0
+ref: v0.1.1
 ```
 
-For another Agent Skills-compatible harness, copy the same directory from the signed release into that harness's documented skill directory.
+For another Agent Skills-compatible harness, copy the same directory from the signed release into that harness's documented skill directory. Helpers are invoked with `/bin/zsh` and do not rely on archive installers preserving executable mode bits.
 
 ## Natural-language examples
 
