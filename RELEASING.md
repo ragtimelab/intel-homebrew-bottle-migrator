@@ -2,8 +2,9 @@
 
 Release only from a clean `main` branch after all required checks pass.
 
-1. Record UTC and local time with `date`; never derive a release date from chat,
-   memory, or a previous build.
+1. Record UTC and local time with `date`; use the verified local calendar date
+   for `CHANGELOG.md`, and never derive it from chat, memory, or a previous
+   build.
 2. Run the complete offline suite and the skill validator on an Intel Mac.
 3. Run `gh skill publish --dry-run`. Treat every error and warning as a release
    blocker.
@@ -21,10 +22,21 @@ Release only from a clean `main` branch after all required checks pass.
    that the GitHub release is neither a draft nor a prerelease and targets the
    exact tagged commit. Do not attach locally collected inventory, package
    archives, or credentials.
-9. Install the release by immutable tag into a clean temporary directory with
-   `gh skill install --pin <tag>`. Rerun validation and the offline suite, then
-   compare its files with the tagged tree after normalizing only publisher-
-   injected `metadata.github-*` frontmatter.
+9. Install the exact release into a clean temporary directory:
+
+   ```sh
+   release_tag=vX.Y.Z
+   release_dir=$(mktemp -d)
+   gh skill install \
+     ragtimelab/intel-homebrew-bottle-migrator \
+     intel-homebrew-bottle-migrator \
+     --pin "$release_tag" \
+     --dir "$release_dir"
+   ```
+
+   Rerun validation and the offline suite, then compare its files with the
+   tagged tree after normalizing only publisher-injected `metadata.github-*`
+   frontmatter.
 10. Check Skills CLI discovery with `npx skills add <owner>/<repo> --list`.
     Send one real, project-scoped, telemetry-enabled install only for initial
     skills.sh registration; do not repeat installs to manipulate indexing or
