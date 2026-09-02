@@ -7,6 +7,15 @@ Versioning.
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-09-03
+
+### Fixed
+
+- Removed runtime reliance on executable mode bits that GitHub archive-based
+  skill installation may not preserve.
+- Made helper-to-helper calls invoke `/bin/zsh` explicitly and made the offline
+  suite validate an archive-installed tree.
+
 ## [0.1.0] - 2026-09-03
 
 ### Added
@@ -21,5 +30,6 @@ Versioning.
   no-cross-prefix, and explicit-approval boundaries.
 - Offline fixture tests and SHA-pinned GitHub Actions workflows.
 
-[Unreleased]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/releases/tag/v0.1.0

@@ -25,22 +25,25 @@ consuming inventory, candidate, or plan JSON.
 
 ## Evidence workflow
 
-1. Run `scripts/collect_inventory.zsh` with repeated `--formula` selectors or
+Invoke every bundled helper with `/bin/zsh`; archive-based skill installers may
+not preserve executable mode bits.
+
+1. Run `/bin/zsh scripts/collect_inventory.zsh` with repeated `--formula` selectors or
    `--all`. It captures the installed formula inventory and expands the relevant
    dependency and reverse-dependency cohort without changing package state.
-2. Use `scripts/audit_formula.zsh` for detailed formula and command-path
+2. Use `/bin/zsh scripts/audit_formula.zsh` for detailed formula and command-path
    evidence. Do not infer ownership from a prefix alone.
 3. Let the LLM select current candidates from official metadata. Validate a
-   MacPorts candidate with `scripts/verify_port_closure.zsh`; validate an
+   MacPorts candidate with `/bin/zsh scripts/verify_port_closure.zsh`; validate an
    already downloaded upstream executable with
-   `scripts/verify_upstream_binary.zsh`.
+   `/bin/zsh scripts/verify_upstream_binary.zsh`.
 4. Create a schema-v2 plan containing evidence references and typed decisions,
-   never shell commands. Run `scripts/validate_plan.zsh` before presenting it.
-5. After explicit approval, run `scripts/preflight_apply.zsh`. Continue only
+   never shell commands. Run `/bin/zsh scripts/validate_plan.zsh` before presenting it.
+5. After explicit approval, run `/bin/zsh scripts/preflight_apply.zsh`. Continue only
    when the approved plan digest and live ownership evidence still match.
 6. Perform approved transitions one at a time under LLM supervision, using the
    state sequence and rollback rules in the runbook. Use
-   `scripts/plan_orphans.zsh` only for read-only, product-scoped cleanup review.
+   `/bin/zsh scripts/plan_orphans.zsh` only for read-only, product-scoped cleanup review.
 
 ## Hard boundaries
 
