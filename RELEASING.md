@@ -2,17 +2,37 @@
 
 Release only from a clean `main` branch after all required checks pass.
 
-1. Run the offline test suite and the skill validator on an Intel Mac.
-2. Review the repository for credentials, private host evidence, absolute user
+1. Record UTC and local time with `date`; never derive a release date from chat,
+   memory, or a previous build.
+2. Run the complete offline suite and the skill validator on an Intel Mac.
+3. Run `gh skill publish --dry-run`. Treat every error and warning as a release
+   blocker.
+4. Verify that the active `Protect release tags` ruleset targets `v*`, rejects
+   tag updates and deletions, allows new tag creation, and has no bypass actors.
+5. Review the repository for credentials, private host evidence, absolute user
    paths, downloaded archives, and unpinned workflow actions.
-3. Update `CHANGELOG.md` using a timestamp verified with `date`.
-4. Create an SSH-signed release commit and an SSH-signed annotated tag.
-5. Push the commit and tag, then verify GitHub displays both signatures as
-   verified.
-6. Create GitHub release notes from the signed tag. Do not attach locally
-   collected inventory, package archives, or credentials.
-7. Install the released skill by immutable tag into a clean temporary harness,
-   rerun validation, and compare the installed tree with the tagged tree.
+6. Update `CHANGELOG.md` with the verified date and merge the release change
+   through the protected `main` branch after all required checks pass.
+7. Create an SSH-signed annotated release tag on the exact merged commit. Push
+   it once, then verify the tag locally and verify the tagged commit through the
+   GitHub API. Never rewrite or delete a published release tag; publish a new
+   patch version to correct a release.
+8. Run `gh skill publish --tag <tag>` against the existing signed tag. Verify
+   that the GitHub release is neither a draft nor a prerelease and targets the
+   exact tagged commit. Do not attach locally collected inventory, package
+   archives, or credentials.
+9. Install the release by immutable tag into a clean temporary directory with
+   `gh skill install --pin <tag>`. Rerun validation and the offline suite, then
+   compare its files with the tagged tree after normalizing only publisher-
+   injected `metadata.github-*` frontmatter.
+10. Check Skills CLI discovery with `npx skills add <owner>/<repo> --list`.
+    Send one real, project-scoped, telemetry-enabled install only for initial
+    skills.sh registration; do not repeat installs to manipulate indexing or
+    install counts.
+11. Verify the skills.sh download snapshot, exact-owner search result, rendered
+    detail page, and badge. If indexing remains unavailable after a bounded
+    recheck, search for duplicates and file one privacy-safe upstream issue
+    instead of retrying installs.
 
 Never weaken branch rules, action pinning, signature requirements, or the
 binary-only runtime policy to complete a release.

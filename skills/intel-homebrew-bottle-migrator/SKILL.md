@@ -1,6 +1,7 @@
 ---
 name: intel-homebrew-bottle-migrator
 description: Audit and migrate any requested set of Homebrew formulae on Intel macOS without local source builds. Use for missing Intel bottles, Tier 3 or end-of-Intel ownership planning, MacPorts public-binary candidates, or official x86_64 upstream replacements; do not use for cask migration, Apple Silicon, or routine successful upgrades.
+license: MIT
 ---
 
 # Intel Homebrew Bottle Migrator

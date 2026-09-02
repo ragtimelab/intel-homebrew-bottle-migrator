@@ -27,15 +27,33 @@ Apple Silicon, Homebrew cask migration, routine successful upgrades, source buil
 
 ## Installation
 
-Install an immutable release rather than `main`. In Codex, ask `$skill-installer` to install:
+For an immutable, signed release, use GitHub CLI and pin the release tag:
 
-```text
-repository: ragtimelab/intel-homebrew-bottle-migrator
-path: skills/intel-homebrew-bottle-migrator
-ref: v0.1.1
+```sh
+gh skill install \
+  ragtimelab/intel-homebrew-bottle-migrator \
+  intel-homebrew-bottle-migrator \
+  --pin v0.1.2 \
+  --agent codex \
+  --scope user
 ```
 
-For another Agent Skills-compatible harness, copy the same directory from the signed release into that harness's documented skill directory. Helpers are invoked with `/bin/zsh` and do not rely on archive installers preserving executable mode bits.
+For skills.sh-compatible installation and update discovery, use the Skills CLI:
+
+```sh
+npx skills add \
+  ragtimelab/intel-homebrew-bottle-migrator \
+  --skill intel-homebrew-bottle-migrator \
+  --agent codex \
+  --global \
+  --yes
+```
+
+The Skills CLI command follows the protected default branch and is convenient
+for ecosystem discovery, but it is not equivalent to an immutable release pin.
+Use `gh skill install --pin` when reproducibility is required. Helpers are
+invoked with `/bin/zsh` and do not rely on archive installers preserving
+executable mode bits.
 
 ## Natural-language examples
 
