@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+case "$1" in
+  -productVersion) print -r -- '15.8' ;;
+  -buildVersion) print -r -- '24H22' ;;
+  *) exit 2 ;;
+esac

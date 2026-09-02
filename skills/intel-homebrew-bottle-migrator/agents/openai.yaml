@@ -1,0 +1,6 @@
+interface:
+  display_name: "Intel Homebrew Bottle Migrator"
+  short_description: "Plan binary-only Intel Homebrew migrations"
+  default_prompt: "Use $intel-homebrew-bottle-migrator to audit this Intel Homebrew source-build risk and propose a verified binary-only migration plan."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+[[ "$1" == -m ]] && { print -r -- 'x86_64'; exit 0; }
+exec /usr/bin/uname "$@"

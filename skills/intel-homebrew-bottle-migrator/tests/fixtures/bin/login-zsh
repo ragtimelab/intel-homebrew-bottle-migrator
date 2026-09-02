@@ -1,0 +1,8 @@
+#!/bin/zsh
+
+print -r -- 'fixture login banner'
+if [[ "$4" == gh && "${IHBM_LOGIN_OWNER:-homebrew}" == homebrew ]]; then
+  print -r -- "__IHBM_PATH__${IHBM_FIXTURE_ROOT}/usr/local/bin/$4"
+else
+  print -r -- "__IHBM_PATH__${IHBM_FIXTURE_ROOT}/opt/local/bin/$4"
+fi

@@ -1,0 +1,108 @@
+#!/bin/zsh
+
+set -u
+[[ -n "${IHBM_CALL_LOG:-}" ]] && print -r -- "brew ${(j: :)@}" >> "$IHBM_CALL_LOG"
+
+formula_json() {
+  local name="$1"
+  case "$name" in
+    ripgrep)
+      print -r -- '{"formulae":[{"name":"ripgrep","full_name":"ripgrep","versions":{"stable":"15.2.0"},"installed":[],"bottle":{"stable":{"files":{}}}}],"casks":[]}'
+      ;;
+    gh)
+      if [[ "${IHBM_GH_ABSENT:-0}" == 1 ]]; then
+        print -r -- '{"formulae":[{"name":"gh","full_name":"gh","versions":{"stable":"2.99.0"},"linked_keg":null,"installed":[],"bottle":{"stable":{"files":{}}}}],"casks":[]}'
+      else
+        print -r -- '{"formulae":[{"name":"gh","full_name":"gh","versions":{"stable":"2.99.0"},"linked_keg":"2.98.0","installed":[{"version":"2.98.0","installed_on_request":true,"poured_from_bottle":true}],"bottle":{"stable":{"files":{}}}}],"casks":[]}'
+      fi
+      ;;
+    imagemagick)
+      print -r -- '{"formulae":[{"name":"imagemagick","full_name":"imagemagick","versions":{"stable":"7.1.2-30"},"linked_keg":"7.1.2-30","installed":[{"version":"7.1.2-30","installed_on_request":true,"poured_from_bottle":true}],"bottle":{"stable":{"files":{}}}}],"casks":[]}'
+      ;;
+    pcre2)
+      print -r -- '{"formulae":[{"name":"pcre2","full_name":"pcre2","versions":{"stable":"10.48"},"installed":[],"bottle":{"stable":{"files":{}}}}],"casks":[]}'
+      ;;
+    app|leaf2|liba|libb|shared|reqdep|cyc1|cyc2)
+      print -r -- "{\"formulae\":[{\"name\":\"$name\",\"full_name\":\"$name\",\"versions\":{\"stable\":\"1.0\"},\"installed\":[],\"bottle\":{\"stable\":{\"files\":{}}}}],\"casks\":[]}"
+      ;;
+    casktool)
+      print -r -- '{"formulae":[],"casks":[{"token":"casktool"}]}'
+      ;;
+    *)
+      print -u2 -- "unknown fixture formula: $name"
+      return 1
+      ;;
+  esac
+}
+
+if [[ "$1" == --version ]]; then
+  print -r -- 'Homebrew 6.0.21'
+  exit 0
+fi
+if [[ "$1" == --prefix ]]; then
+  print -r -- "${IHBM_FIXTURE_ROOT}/usr/local"
+  exit 0
+fi
+
+case "$1" in
+  info)
+    if [[ "${3:-}" == --installed ]]; then
+      if [[ "${4:-}" == --cask ]]; then
+        print -r -- '{"formulae":[],"casks":[{"token":"casktool","full_token":"casktool","depends_on":{"formula":["app"]}}]}'
+      else
+        print -r -- '{
+        "formulae": [
+          {"name":"app","full_name":"app","dependencies":["leaf2","liba","shared","reqdep"],"installed":[{"version":"1.0","installed_on_request":true,"poured_from_bottle":true,"runtime_dependencies":[{"full_name":"leaf2"},{"full_name":"liba"},{"full_name":"shared"},{"full_name":"reqdep"}]}]},
+          {"name":"leaf2","full_name":"leaf2","dependencies":[],"installed":[{"version":"1.0","installed_on_request":false,"poured_from_bottle":true,"runtime_dependencies":[]}]},
+          {"name":"liba","full_name":"liba","dependencies":["libb"],"installed":[{"version":"1.0","installed_on_request":false,"poured_from_bottle":true,"runtime_dependencies":[{"full_name":"libb"}]}]},
+          {"name":"libb","full_name":"libb","dependencies":[],"installed":[{"version":"1.0","installed_on_request":false,"poured_from_bottle":true,"runtime_dependencies":[]}]},
+          {"name":"shared","full_name":"shared","dependencies":[],"installed":[{"version":"1.0","installed_on_request":false,"poured_from_bottle":true,"runtime_dependencies":[]}]},
+          {"name":"reqdep","full_name":"reqdep","dependencies":[],"installed":[{"version":"1.0","installed_on_request":true,"poured_from_bottle":true,"runtime_dependencies":[]}]},
+          {"name":"cyc1","full_name":"cyc1","dependencies":["cyc2"],"installed":[{"version":"1.0","installed_on_request":false,"poured_from_bottle":true,"runtime_dependencies":[{"full_name":"cyc2"}]}]},
+          {"name":"cyc2","full_name":"cyc2","dependencies":["cyc1"],"installed":[{"version":"1.0","installed_on_request":false,"poured_from_bottle":true,"runtime_dependencies":[{"full_name":"cyc1"}]}]},
+          {"name":"external","full_name":"external","dependencies":["shared"],"installed":[{"version":"1.0","installed_on_request":true,"poured_from_bottle":true,"runtime_dependencies":[{"full_name":"shared"}]}]},
+          {"name":"pcre2","full_name":"pcre2","dependencies":[],"installed":[{"version":"10.48","installed_on_request":false,"poured_from_bottle":true,"runtime_dependencies":[]}]}
+        ]
+      }'
+      fi
+    else
+      formula_json "${3:-}"
+    fi
+    ;;
+  uses)
+    if [[ "${IHBM_FAIL_USES:-0}" == 1 ]]; then
+      print -u2 -- 'fixture uses failure'
+      exit 9
+    fi
+    ;;
+  list)
+    if [[ "${2:-}" == gh && "${IHBM_GH_ABSENT:-0}" != 1 ]]; then
+      print -r -- "${IHBM_FIXTURE_ROOT}/usr/local/Cellar/gh/2.98.0/bin/gh"
+      exit 0
+    fi
+    if [[ "${2:-}" == imagemagick ]]; then
+      print -r -- "${IHBM_FIXTURE_ROOT}/usr/local/Cellar/imagemagick/7.1.2-30/bin/magick"
+      exit 0
+    fi
+    exit 1
+    ;;
+  upgrade)
+    print -r -- 'fixture upgrade dry run'
+    ;;
+  deps)
+    if [[ "${@: -1}" == app ]]; then
+      print -r -- 'liba'
+      print -r -- 'libb'
+      print -r -- 'leaf2'
+      print -r -- 'shared'
+      print -r -- 'reqdep'
+      print -r -- 'cyc1'
+      print -r -- 'cyc2'
+      print -r -- 'pcre2'
+    fi
+    ;;
+  *)
+    print -u2 -- "unsupported fixture brew command: ${(j: :)@}"
+    exit 64
+    ;;
+esac

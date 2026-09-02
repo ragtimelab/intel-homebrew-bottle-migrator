@@ -1,0 +1,8 @@
+#!/bin/zsh
+
+print -r -- "$2:"
+print -r -- $'\t/opt/local/lib/libiconv.2.dylib (compatibility version 10.0.0, current version 10.0.0)'
+if [[ "${IHBM_CROSS_PREFIX:-0}" == 1 ]]; then
+  print -r -- $'\t'"${IHBM_FIXTURE_ROOT}/usr/local/lib/libbad.dylib (compatibility version 1.0.0, current version 1.0.0)"
+fi
+print -r -- $'\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1.0.0)'

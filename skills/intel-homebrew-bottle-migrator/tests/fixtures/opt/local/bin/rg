@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+print -r -- 'ripgrep 15.1.0'
+print -r -- 'features:+pcre2'
+print -r -- 'PCRE2 10.45 is available (JIT is available)'

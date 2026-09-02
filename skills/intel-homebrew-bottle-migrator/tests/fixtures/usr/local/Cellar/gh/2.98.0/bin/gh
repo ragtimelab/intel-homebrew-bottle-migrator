@@ -1,0 +1,3 @@
+#!/bin/zsh
+
+print -r -- 'gh version 2.98.0 (fixture Homebrew keg)'
