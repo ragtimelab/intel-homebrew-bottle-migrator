@@ -7,6 +7,15 @@ Versioning.
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-09-03
+
+### Changed
+
+- Added explicit MIT skill metadata and documented immutable GitHub CLI and
+  skills.sh-compatible installation paths.
+- Made tag immutability, warning-free publisher validation, released-tree
+  installation, and skills.sh indexing checks part of the release contract.
+
 ## [0.1.1] - 2026-09-03
 
 ### Fixed
@@ -30,6 +39,7 @@ Versioning.
   no-cross-prefix, and explicit-approval boundaries.
 - Offline fixture tests and SHA-pinned GitHub Actions workflows.
 
-[Unreleased]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/releases/tag/v0.1.0
