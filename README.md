@@ -33,7 +33,7 @@ For an immutable, signed release, use GitHub CLI and pin the release tag:
 gh skill install \
   ragtimelab/intel-homebrew-bottle-migrator \
   intel-homebrew-bottle-migrator \
-  --pin v0.1.2 \
+  --pin v0.1.3 \
   --agent codex \
   --scope user
 ```

@@ -7,6 +7,14 @@ Versioning.
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-09-03
+
+### Fixed
+
+- Preserved signed, immutable release tags by using `gh skill publish` for
+  validation and `gh release create --verify-tag` for publication, matching the
+  verified behavior of GitHub CLI 2.99.0.
+
 ## [0.1.2] - 2026-09-03
 
 ### Changed
@@ -39,7 +47,8 @@ Versioning.
   no-cross-prefix, and explicit-approval boundaries.
 - Offline fixture tests and SHA-pinned GitHub Actions workflows.
 
-[Unreleased]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/compare/v0.1.3...HEAD
+[0.1.3]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/releases/tag/v0.1.0
