@@ -18,10 +18,23 @@ Release only from a clean `main` branch after all required checks pass.
    it once, then verify the tag locally and verify the tagged commit through the
    GitHub API. Never rewrite or delete a published release tag; publish a new
    patch version to correct a release.
-8. Run `gh skill publish --tag <tag>` against the existing signed tag. Verify
-   that the GitHub release is neither a draft nor a prerelease and targets the
-   exact tagged commit. Do not attach locally collected inventory, package
-   archives, or credentials.
+8. Publish the existing signed tag without delegating tag creation to the skill
+   publisher:
+
+   ```sh
+   release_tag=vX.Y.Z
+   gh release create "$release_tag" \
+     --verify-tag \
+     --title "intel-homebrew-bottle-migrator $release_tag" \
+     --generate-notes
+   ```
+
+   `gh skill publish --tag` rejects an already-created signed tag in GitHub CLI
+   2.99.0, so use it only as the warning-free dry-run validator in step 3.
+   Never delete, rewrite, or weaken protection for a signed tag to satisfy the
+   publisher. Verify that the GitHub release is neither a draft nor a
+   prerelease and that the tag still resolves to the exact reviewed commit. Do
+   not attach locally collected inventory, package archives, or credentials.
 9. Install the exact release into a clean temporary directory:
 
    ```sh
