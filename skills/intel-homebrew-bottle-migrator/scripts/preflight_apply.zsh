@@ -31,7 +31,7 @@ fi
 
 plan_digest="$($jq_bin -r '.plan_digest' "$plan_file")"
 [[ "$approved_digest" == "$plan_digest" ]] || { print -u2 'approved plan digest mismatch'; exit 3; }
-"$skill_dir/scripts/validate_plan.zsh" --inventory "$inventory_file" --plan "$plan_file" >/dev/null
+/bin/zsh "$skill_dir/scripts/validate_plan.zsh" --inventory "$inventory_file" --plan "$plan_file" >/dev/null
 
 temp_inventory="$(/usr/bin/mktemp "${TMPDIR:-/tmp}/ihbm-preflight.XXXXXX")"
 cleanup() { [[ -f "$temp_inventory" ]] && /bin/rm -f -- "$temp_inventory"; }
@@ -47,7 +47,7 @@ else
     [[ -n "$formula_name" ]] && collector_args+=(--formula "$formula_name")
   done < <($jq_bin -r '.scope.requested[]' "$inventory_file")
 fi
-"$skill_dir/scripts/collect_inventory.zsh" "${collector_args[@]}" >"$temp_inventory"
+/bin/zsh "$skill_dir/scripts/collect_inventory.zsh" "${collector_args[@]}" >"$temp_inventory"
 
 $jq_bin -n --slurpfile previous "$inventory_file" --slurpfile live "$temp_inventory" --arg digest "$approved_digest" '
   [
