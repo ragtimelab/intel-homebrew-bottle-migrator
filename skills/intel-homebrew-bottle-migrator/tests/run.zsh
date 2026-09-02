@@ -12,6 +12,12 @@ temp_dir="$(mktemp -d "${TMPDIR:-/tmp}/ihbm-tests.XXXXXX")"
 cleanup() { [[ -d "$temp_dir" ]] && rm -rf -- "$temp_dir"; }
 trap cleanup EXIT INT TERM
 
+# GitHub archive downloads do not reliably retain executable mode bits. The
+# suite must prove that a freshly downloaded skill can recover its test-only
+# fixture executability and invoke runtime helpers through their zsh shebangs.
+/bin/chmod 0755 "$skill_dir"/scripts/*.zsh
+/usr/bin/find "$fixture_root" -type f -exec /bin/chmod 0755 {} +
+
 export PATH="$fixture_bin:$PATH"
 export IHBM_TEST_MODE=1
 export IHBM_FIXTURE_ROOT="$fixture_root"

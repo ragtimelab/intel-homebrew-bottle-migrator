@@ -14,8 +14,8 @@ runtime linkage.
 Run exactly one selector form:
 
 ```sh
-scripts/collect_inventory.zsh --formula FORMULA [--formula FORMULA ...]
-scripts/collect_inventory.zsh --all
+/bin/zsh scripts/collect_inventory.zsh --formula FORMULA [--formula FORMULA ...]
+/bin/zsh scripts/collect_inventory.zsh --all
 ```
 
 The requested formulae are seeds. The collector expands them across installed
@@ -36,7 +36,7 @@ planning evidence:
 
 ```sh
 /opt/local/bin/port -b -y install PORT +VARIANT
-scripts/verify_port_closure.zsh [--variant +NAME|-NAME] PORT
+/bin/zsh scripts/verify_port_closure.zsh [--variant +NAME|-NAME] PORT
 ```
 
 Manual archive inspection proves availability, structure, manifest identity,
@@ -50,7 +50,7 @@ checksum or signature, then inspect the already downloaded binary without
 executing it:
 
 ```sh
-scripts/verify_upstream_binary.zsh \
+/bin/zsh scripts/verify_upstream_binary.zsh \
   --file /ABSOLUTE/PATH/TO/BINARY \
   --expected-sha256 SHA256
 ```
@@ -72,7 +72,7 @@ never guess or leave an `unknown` final state. Plans may contain typed
 transitions and arguments, but never command strings or credentials.
 
 ```sh
-scripts/validate_plan.zsh --inventory INVENTORY.json --plan PLAN.json
+/bin/zsh scripts/validate_plan.zsh --inventory INVENTORY.json --plan PLAN.json
 ```
 
 Validation is not authorization. Present feature differences, security
@@ -84,7 +84,7 @@ the exact plan digest to the user.
 After explicit user approval, revalidate the approved plan and current host:
 
 ```sh
-scripts/preflight_apply.zsh \
+/bin/zsh scripts/preflight_apply.zsh \
   --inventory INVENTORY.json \
   --plan PLAN.json \
   --plan-sha256 DIGEST

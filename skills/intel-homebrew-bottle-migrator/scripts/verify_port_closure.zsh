@@ -70,8 +70,8 @@ else
 fi
 skill_dir="${0:A:h:h}"
 archive_helper="$skill_dir/scripts/verify_port_archive.zsh"
-[[ -n "$jq_bin" && -n "$port_bin" && -x "$archive_helper" ]] || {
-  print -u2 'jq, port, and executable verify_port_archive.zsh are required'
+[[ -n "$jq_bin" && -n "$port_bin" && -r "$archive_helper" ]] || {
+  print -u2 'jq, port, and readable verify_port_archive.zsh are required'
   exit 2
 }
 
@@ -181,7 +181,7 @@ for closure_port in "${closure_ports[@]}"; do
     [[ -n "$variant" ]] && args+=(--variant "$variant")
   done
   (
-    "$archive_helper" "${args[@]}" "$closure_port" >"$temp_dir/$index.json" 2>"$temp_dir/$index.stderr"
+    /bin/zsh "$archive_helper" "${args[@]}" "$closure_port" >"$temp_dir/$index.json" 2>"$temp_dir/$index.stderr"
     print -r -- "$?" >"$temp_dir/$index.exit"
   ) &
   pids+=("$!")
