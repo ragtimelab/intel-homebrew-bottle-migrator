@@ -7,6 +7,14 @@ Versioning.
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-09-17
+
+### Changed
+
+- Updated the pinned CodeQL SARIF upload action from 4.37.9 to 4.38.0 using
+  the official full commit SHA, with the resulting Scorecard upload verified
+  on the protected default branch.
+
 ## [0.1.3] - 2026-09-03
 
 ### Fixed
@@ -47,7 +55,8 @@ Versioning.
   no-cross-prefix, and explicit-approval boundaries.
 - Offline fixture tests and SHA-pinned GitHub Actions workflows.
 
-[Unreleased]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/compare/v0.1.3...HEAD
+[Unreleased]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/compare/v0.1.4...HEAD
+[0.1.4]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/ragtimelab/intel-homebrew-bottle-migrator/compare/v0.1.0...v0.1.1
